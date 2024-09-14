@@ -10,23 +10,42 @@ window.addEventListener("resize", function () {
   canvas.height = window.innerHeight;
 });
 
-const mouse = {
+const pointer = {
   x: undefined,
   y: undefined,
 };
 
+// Mouse events
 canvas.addEventListener("click", function (event) {
-  mouse.x = event.x;
-  mouse.y = event.y;
+  pointer.x = event.x;
+  pointer.y = event.y;
   for (let i = 0; i < 30; i++) {
     particleArray.push(new Particle());
   }
 });
-console.log();
 
 canvas.addEventListener("mousemove", function (event) {
-  mouse.x = event.x;
-  mouse.y = event.y;
+  pointer.x = event.x;
+  pointer.y = event.y;
+  for (let i = 0; i < 15; i++) {
+    particleArray.push(new Particle());
+  }
+});
+
+// Touch events for mobile
+canvas.addEventListener("touchstart", function (event) {
+  const touch = event.touches[0];
+  pointer.x = touch.clientX;
+  pointer.y = touch.clientY;
+  for (let i = 0; i < 30; i++) {
+    particleArray.push(new Particle());
+  }
+});
+
+canvas.addEventListener("touchmove", function (event) {
+  const touch = event.touches[0];
+  pointer.x = touch.clientX;
+  pointer.y = touch.clientY;
   for (let i = 0; i < 15; i++) {
     particleArray.push(new Particle());
   }
@@ -35,14 +54,14 @@ canvas.addEventListener("mousemove", function (event) {
 /*function drawCircle() {
   art.fillStyle = "red";
   art.beginPath();
-  art.arc(mouse.x, mouse.y, 200, 0, Math.PI * 2);
+  art.arc(pointer.x, pointer.y, 200, 0, Math.PI * 2);
   art.fill();
 }*/
 
 class Particle {
   constructor() {
-    this.x = mouse.x;
-    this.y = mouse.y;
+    this.x = pointer.x;
+    this.y = pointer.y;
     this.size = Math.random() * 15 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
